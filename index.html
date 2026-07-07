@@ -223,10 +223,57 @@ textarea {
     display: none;
 }
 
-.rating {
-    font-size: 14px;
-    color: gold;
-    margin-top: 5px;
+    .film-detail-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.85);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        z-index: 9999;
+    }
+
+    .film-detail {
+        background: #111;
+        max-width: 900px;
+        width: 100%;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+        overflow: auto;
+        max-height: 100%;
+    }
+
+    .film-detail .film-detail-content {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .film-detail .poster {
+        width: 320px;
+        max-width: 100%;
+        border-radius: 12px;
+    }
+
+    .film-detail .button-link {
+        display: inline-flex;
+        justify-content: center;
+        width: auto;
+    }
+
+    @media (max-width: 768px) {
+        .film-detail .film-detail-content {
+            flex-direction: column;
+        }
+
+        .film-detail .button-link {
+            width: 100%;
+        }
+    }
+
 }
 
 .rating-card {
@@ -361,6 +408,24 @@ textarea {
 <body>
 
 <h1>🎬 BlackCloud 🎬</h1>
+
+<div id="filmDetail" class="film-detail-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="film-detail">
+        <button id="closeFilmDetail" style="margin-bottom: 20px;">Fechar</button>
+        <h2 id="filmTitle"></h2>
+        <div class="film-detail-content">
+            <img id="filmPoster" class="poster" src="" alt="Poster do filme">
+            <div class="info">
+                <h3 id="filmSynopsisLabel">Sinopse</h3>
+                <p id="filmSynopsis"></p>
+                <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:16px;">
+                    <a id="watchTrailerBtn" class="button-link" href="#" target="_blank" rel="noopener noreferrer">Ver trailer</a>
+                    <a id="watchMovieBtn" class="button-link" href="#" target="_blank" rel="noopener noreferrer">Assistir filme</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="tabs">
     <button class="tab-button active" data-tab="filmes" onclick="showTab('filmes')">Filmes</button>
@@ -1223,127 +1288,33 @@ function openFilm(slug) {
     const film = filmData[slug];
     if (!film) return;
 
-    // Encontrar a imagem do card
     const card = document.querySelector(`[data-name="${slug}"] img`);
-    const imgSrc = card ? card.src : '';
+    const imgSrc = card ? card.src : 'https://via.placeholder.com/300x450?text=Poster';
 
     const lang = document.documentElement.lang || 'pt-br';
     const trans = {
-        'pt-br': { voltar: 'Voltar', verTrailer: 'Ver Trailer', assistirFilme: 'Assistir Filme', sinopse: 'Sinopse' },
-        'en': { voltar: 'Back', verTrailer: 'Watch Trailer', assistirFilme: 'Watch Movie', sinopse: 'Synopsis' },
-        'ru': { voltar: 'Назад', verTrailer: 'Смотреть трейлер', assistirFilme: 'Смотреть фильм', sinopse: 'Синопсис' },
-        'de': { voltar: 'Zurück', verTrailer: 'Trailer ansehen', assistirFilme: 'Film ansehen', sinopse: 'Synopsis' }
+        'pt-br': { fechar: 'Fechar', verTrailer: 'Ver trailer', assistirFilme: 'Assistir filme', sinopse: 'Sinopse' },
+        'en': { fechar: 'Close', verTrailer: 'Watch trailer', assistirFilme: 'Watch movie', sinopse: 'Synopsis' },
+        'ru': { fechar: 'Закрыть', verTrailer: 'Смотреть трейлер', assistirFilme: 'Смотреть фильм', sinopse: 'Синопсис' },
+        'de': { fechar: 'Schließen', verTrailer: 'Trailer ansehen', assistirFilme: 'Film ansehen', sinopse: 'Synopsis' }
     };
     const t = trans[lang] || trans['pt-br'];
 
-    const html = `
-    <!DOCTYPE html>
-    <html lang="${lang}">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>${film.title[lang] || film.title['pt-br']}</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 20px;
-                background: #111;
-                color: white;
-                font-size: 18px;
-                overflow-x: hidden;
-            }
-            .container {
-                display: flex;
-                gap: 20px;
-                align-items: flex-start;
-            }
-            .poster {
-                width: 300px;
-                max-width: 100%;
-                border-radius: 10px;
-            }
-            .info {
-                flex: 1;
-            }
-            button,
-            .button-link {
-                width: auto;
-            }
-            @media (max-width: 768px) {
-                .container {
-                    flex-direction: column;
-                    gap: 14px;
-                }
-                .poster {
-                    width: 100%;
-                }
-                button,
-                .button-link {
-                    width: 100%;
-                    box-sizing: border-box;
-                    margin-bottom: 10px;
-                }
-            }
-            h1, h2 {
-                color: #fff;
-            }
-            button,
-            .button-link {
-                color: #00aaff;
-                text-decoration: none;
-                background: #333;
-                border: none;
-                padding: 12px 20px;
-                border-radius: 8px;
-                cursor: pointer;
-                margin-right: 10px;
-                font-size: 16px;
-                display: inline-flex;
-                justify-content: center;
-                align-items: center;
-            }
-            .button-link {
-                text-align: center;
-            }
-            button:hover {
-                background: #555;
-            }
-            .texto-rgb {
-                animation: texto-rgb 8s linear infinite;
-                background: linear-gradient(90deg, #ff0055, #00ff99, #0066ff);
-                -webkit-background-clip: text;
-                background-clip: text;
-                color: transparent;
-            }
-            @keyframes texto-rgb {
-                0% { color: rgb(255, 0, 0); }
-                25% { color: rgb(0, 255, 0); }
-                50% { color: rgb(0, 0, 255); }
-                75% { color: rgb(255, 255, 0); }
-                100% { color: rgb(255, 0, 0); }
-            }
-        </style>
-    </head>
-    <body>
-        <button onclick="window.close()">${t.voltar}</button>
-        <h1 class="texto-rgb">${film.title[lang] || film.title['pt-br']}</h1>
-        <div class="container">
-            <img src="${imgSrc}" alt="${film.title[lang] || film.title['pt-br']}" class="poster">
-            <div class="info">
-                <h2>${t.sinopse}</h2>
-                <p class="texto-rgb">${film.synopsis[lang] || film.synopsis['pt-br']}</p>
-                <br>
-                <a class="button-link" href="${film.trailer}" target="_blank" rel="noopener noreferrer">${t.verTrailer}</a>
-                <a class="button-link" href="${film.movie}" target="_blank" rel="noopener noreferrer">${t.assistirFilme}</a>
-            </div>
-        </div>
-    </body>
-    </html>
-    `;
-
-    const newWindow = window.open('', '_blank');
-    newWindow.document.write(html);
-    newWindow.document.close();
+    const detail = document.getElementById('filmDetail');
+    document.getElementById('closeFilmDetail').innerText = t.fechar;
+    document.getElementById('filmTitle').innerText = film.title[lang] || film.title['pt-br'];
+    document.getElementById('filmPoster').src = imgSrc;
+    document.getElementById('filmPoster').alt = film.title[lang] || film.title['pt-br'];
+    document.getElementById('filmSynopsisLabel').innerText = t.sinopse;
+    document.getElementById('filmSynopsis').innerText = film.synopsis[lang] || film.synopsis['pt-br'];
+    const trailerBtn = document.getElementById('watchTrailerBtn');
+    trailerBtn.href = film.trailer;
+    trailerBtn.innerText = t.verTrailer;
+    const movieBtn = document.getElementById('watchMovieBtn');
+    movieBtn.href = film.movie;
+    movieBtn.innerText = t.assistirFilme;
+    detail.style.display = 'flex';
+    detail.setAttribute('aria-hidden', 'false');
 }
 
 function loadRanking() {
@@ -1511,6 +1482,20 @@ document.getElementById('language').addEventListener('change', function() {
     document.documentElement.lang = this.value;
     localStorage.setItem('lang', this.value);
     updateLanguage(this.value);
+});
+
+document.getElementById('closeFilmDetail').addEventListener('click', function() {
+    const detail = document.getElementById('filmDetail');
+    detail.style.display = 'none';
+    detail.setAttribute('aria-hidden', 'true');
+});
+
+document.getElementById('filmDetail').addEventListener('click', function(event) {
+    if (event.target.id === 'filmDetail') {
+        const detail = document.getElementById('filmDetail');
+        detail.style.display = 'none';
+        detail.setAttribute('aria-hidden', 'true');
+    }
 });
 
 // Event listeners for custom colors
