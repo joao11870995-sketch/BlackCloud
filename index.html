@@ -419,8 +419,8 @@ textarea {
                 <h3 id="filmSynopsisLabel">Sinopse</h3>
                 <p id="filmSynopsis"></p>
                 <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:16px;">
-                    <a id="watchTrailerBtn" class="button-link" href="#" target="_blank" rel="noopener noreferrer">Ver trailer</a>
-                    <a id="watchMovieBtn" class="button-link" href="#" target="_blank" rel="noopener noreferrer">Assistir filme</a>
+                    <button id="watchTrailerBtn" class="button-link" type="button">Ver trailer</button>
+                    <button id="watchMovieBtn" class="button-link" type="button">Assistir filme</button>
                 </div>
             </div>
         </div>
@@ -1308,10 +1308,14 @@ function openFilm(slug) {
     document.getElementById('filmSynopsisLabel').innerText = t.sinopse;
     document.getElementById('filmSynopsis').innerText = film.synopsis[lang] || film.synopsis['pt-br'];
     const trailerBtn = document.getElementById('watchTrailerBtn');
-    trailerBtn.href = film.trailer;
+    trailerBtn.onclick = function() {
+        window.open(film.trailer, '_blank');
+    };
     trailerBtn.innerText = t.verTrailer;
     const movieBtn = document.getElementById('watchMovieBtn');
-    movieBtn.href = film.movie;
+    movieBtn.onclick = function() {
+        window.open(film.movie, '_blank');
+    };
     movieBtn.innerText = t.assistirFilme;
     detail.style.display = 'flex';
     detail.setAttribute('aria-hidden', 'false');
