@@ -1265,10 +1265,11 @@ function openFilm(slug) {
             .info {
                 flex: 1;
             }
-            button {
+            button,
+            .button-link {
                 width: auto;
             }
-            @media (min-width: 768px) {
+            @media (max-width: 768px) {
                 .container {
                     flex-direction: column;
                     gap: 14px;
@@ -1276,7 +1277,8 @@ function openFilm(slug) {
                 .poster {
                     width: 100%;
                 }
-                button {
+                button,
+                .button-link {
                     width: 100%;
                     box-sizing: border-box;
                     margin-bottom: 10px;
@@ -1285,7 +1287,8 @@ function openFilm(slug) {
             h1, h2 {
                 color: #fff;
             }
-            button {
+            button,
+            .button-link {
                 color: #00aaff;
                 text-decoration: none;
                 background: #333;
@@ -1295,6 +1298,12 @@ function openFilm(slug) {
                 cursor: pointer;
                 margin-right: 10px;
                 font-size: 16px;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .button-link {
+                text-align: center;
             }
             button:hover {
                 background: #555;
@@ -1324,8 +1333,8 @@ function openFilm(slug) {
                 <h2>${t.sinopse}</h2>
                 <p class="texto-rgb">${film.synopsis[lang] || film.synopsis['pt-br']}</p>
                 <br>
-                <button onclick="window.open('${film.trailer}', '_blank')">${t.verTrailer}</button>
-                <button onclick="window.open('${film.movie}', '_blank')">${t.assistirFilme}</button>
+                <a class="button-link" href="${film.trailer}" target="_blank" rel="noopener noreferrer">${t.verTrailer}</a>
+                <a class="button-link" href="${film.movie}" target="_blank" rel="noopener noreferrer">${t.assistirFilme}</a>
             </div>
         </div>
     </body>
