@@ -2,14 +2,21 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BlackCloud</title>
 
 <style>
+* {
+    box-sizing: border-box;
+}
 body {
     font-family: Arial, sans-serif;
     background: #111;
     color: white;
     text-align: center;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
 .texto-rgb {
@@ -132,11 +139,13 @@ section {
 
 input {
     padding: 10px;
-    width: 250px;
+    width: 100%;
+    max-width: 320px;
 }
 
 textarea {
-    width: 300px;
+    width: 100%;
+    max-width: 100%;
     height: 100px;
 }
 
@@ -146,6 +155,7 @@ textarea {
     justify-content: center;
     gap: 8px;
     margin: 20px 0;
+    padding: 0 10px;
 }
 
 .tab-button {
@@ -187,7 +197,8 @@ textarea {
 }
 
 .card {
-    width: 150px;
+    width: 100%;
+    max-width: 220px;
     background: #222;
     border: 1px solid #333;
     border-radius: 12px;
@@ -290,6 +301,58 @@ textarea {
     background: #ffff00;
     color: #000;
     border: 1px solid #000;
+}
+
+@media (max-width: 768px) {
+    body {
+        text-align: left;
+    }
+
+    section {
+        margin: 12px 10px;
+        padding: 14px;
+    }
+
+    .tabs {
+        justify-content: stretch;
+        gap: 6px;
+    }
+
+    .tab-button {
+        flex: 1 1 100%;
+        max-width: none;
+    }
+
+    .actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .card {
+        max-width: none;
+    }
+
+    .menu a,
+    .menu button {
+        width: 100%;
+        max-width: none;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: clamp(1.5rem, 5vw, 2.25rem);
+    }
 }
 </style>
 
@@ -1178,6 +1241,7 @@ function openFilm(slug) {
     <html lang="${lang}">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>${film.title[lang] || film.title['pt-br']}</title>
         <style>
             body {
@@ -1186,6 +1250,7 @@ function openFilm(slug) {
                 background: #111;
                 color: white;
                 font-size: 18px;
+                overflow-x: hidden;
             }
             .container {
                 display: flex;
@@ -1194,10 +1259,28 @@ function openFilm(slug) {
             }
             .poster {
                 width: 300px;
+                max-width: 100%;
                 border-radius: 10px;
             }
             .info {
                 flex: 1;
+            }
+            button {
+                width: auto;
+            }
+            @media (max-width: 768px) {
+                .container {
+                    flex-direction: column;
+                    gap: 14px;
+                }
+                .poster {
+                    width: 100%;
+                }
+                button {
+                    width: 100%;
+                    box-sizing: border-box;
+                    margin-bottom: 10px;
+                }
             }
             h1, h2 {
                 color: #fff;
