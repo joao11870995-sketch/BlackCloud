@@ -274,8 +274,6 @@ textarea {
         }
     }
 
-}
-
 .rating-card {
     display: flex;
     flex-direction: column;
@@ -518,17 +516,9 @@ textarea {
         <input onkeyup="buscar('livros', this.value)" placeholder="Pesquisar livros">
     </div>
     <div class="cards" id="livrosCards">
-        <div class="card" data-name="harry potter">
-            <img src="https://via.placeholder.com/150x220?text=Harry+Potter" alt="Harry Potter">
-            <p>Harry Potter</p>
-        </div>
-        <div class="card" data-name="senhor dos aneis">
-            <img src="https://via.placeholder.com/150x220?text=Senhor+dos+An%C3%A9is" alt="Senhor dos Anéis">
-            <p>Senhor dos Anéis</p>
-        </div>
-        <div class="card" data-name="dom casmurro">
-            <img src="https://via.placeholder.com/150x220?text=Dom+Casmurro" alt="Dom Casmurro">
-            <p>Dom Casmurro</p>
+        <div class="card" data-name="sherlock-holmes-o-vale-do-medo" onclick="openFilm('sherlock-holmes-o-vale-do-medo')" tabindex="0">
+            <img src="https://m.media-amazon.com/images/I/81Xx+qiH1KL._UF1000,1000_QL80_.jpg" alt="Sherlock Holmes - O Vale do Medo">
+            <p>Sherlock Holmes - O Vale do Medo</p>
         </div>
     </div>
     <button id="showMoreLivros" onclick="showMore('livros')" style="display: none; margin: 20px auto; padding: 10px 20px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">Mostrar Mais</button>
@@ -657,11 +647,13 @@ const translations = {
         'Emergência Radioativa': 'Emergência Radioativa',
         'Harry Potter': 'Harry Potter',
         'Senhor dos Anéis': 'Senhor dos Anéis',
+        'Sherlock Holmes - O Vale do Medo': 'Sherlock Holmes - O Vale do Medo',
         'Emergência Radioativa': 'Emergência Radioativa',
         'Iron Lung': 'Iron Lung',
         'Descrição': 'Descrição',
         'Ver trailer': 'Ver trailer',
         'Ver filme': 'Ver filme',
+        'Baixar livro': 'Baixar livro',
         'Fechar': 'Fechar'
     },
     'en': {
@@ -765,10 +757,12 @@ const translations = {
         'Harry Potter': 'Гарри Поттер',
         'Senhor dos Anéis': 'Властелин колец',
         'Dom Casmurro': 'Дом Касмурру',
+        'Sherlock Holmes - O Vale do Medo': 'Шерлок Холмс - Долина страха',
         'Sinopse': 'Синопсис',
         'Descrição': 'Описание',
         'Ver trailer': 'Смотреть трейлер',
         'Ver filme': 'Смотреть фильм',
+        'Baixar livro': 'Скачать книгу',
         'Fechar': 'Закрыть'
     },
     'de': {
@@ -1050,6 +1044,25 @@ const filmData = {
         description: 'Baseada em fatos reais sobre o acidente radiológico de Goiânia.',
         trailer: 'https://www.youtube.com/watch?v=s0wVghg4vS4',
         movie: 'https://example.com/emergencia-radioativa'
+    },
+    'sherlock-holmes-o-vale-do-medo': {
+        title: {
+            'pt-br': 'Sherlock Holmes - O Vale do Medo',
+            'en': 'Sherlock Holmes - The Valley of Fear',
+            'ru': 'Шерлок Холмс - Долина страха',
+            'de': 'Sherlock Holmes - Das Tal der Angst'
+        },
+        synopsis: {
+            'pt-br': 'Suspense, ação e vingança no derradeiro romance de Sherlock Holmes! Um crime aparentemente perfeito, um brilhante detetive e uma trama espetacular que mistura elementos de pulp fiction ao clássico romance de enigma. Em O Vale do Medo (1915), Sherlock Holmes e seu leal Watson descobrem que um certo John Douglas, proprietário e morador do Solar Birlstone, corre perigo de vida iminente. No entanto, pouco depois, ficam sabendo que o assassinato fora consumado na noite anterior, em circunstâncias extraordinárias. Desvendar esse mistério acabará transportando Holmes e Watson para décadas antes, quando, do outro lado do Atlântico, na Pensilvânia dos anos 1880, violência, corrupção, uma organização secreta e operários de uma mina de carvão misturavam-se perigosamente... O crime parece insolúvel. E seria, se o detetive da história não fosse Sherlock Holmes.',
+            'en': 'Suspense, action and revenge in the final Sherlock Holmes novel! A seemingly perfect crime, a brilliant detective and a spectacular plot that blends pulp fiction elements with the classic mystery romance. In The Valley of Fear (1915), Sherlock Holmes and his loyal Watson discover that a certain John Douglas, owner and resident of Birlstone Manor, is in imminent danger. However, shortly after, they learn that the murder was committed the night before under extraordinary circumstances. Unraveling this mystery will transport Holmes and Watson decades earlier, when, on the other side of the Atlantic, in Pennsylvania in the 1880s, violence, corruption, a secret organization and coal miners mixed dangerously... The crime seems unsolvable. And it would be, if the detective in the story were not Sherlock Holmes.',
+            'ru': 'Саспенс, действие и месть в последнем романе Шерлока Холмса! Кажущиеся идеальным преступление, блестящий сыщик и захватывающий сюжет, смешивающий элементы pulp fiction с классическим романом-головоломкой. В «Долине страха» (1915) Шерлок Холмс и его верный Уотсон узнают, что некий Джон Дуглас, владелец и житель особняка Бирлстоун, находится в смертельной опасности. Однако вскоре они узнают, что убийство было совершено накануне ночью при необычайных обстоятельствах. Разгадка этой тайны перенесёт Холмса и Уотсона на десятилетия назад, когда, по другую сторону Атлантики, в Пенсильвании 1880-х, насилие, коррупция, тайная организация и шахтёры смешивались опасно... Преступление кажется неразрешимым. И было бы так, если бы детективом в этой истории не был Шерлок Холмс.',
+            'de': 'Spannung, Action und Rache im letzten Roman von Sherlock Holmes! Ein scheinbar perfekter Mord, ein brillante Detektiv und ein spektakuläres Plot, das Elemente der Pulp-Fiction mit dem klassischen Rätselroman verbindet. In The Valley of Fear (1915) entdecken Sherlock Holmes und sein treuer Watson, dass ein gewisser John Douglas, Besitzer und Bewohner von Birlstone Manor, unmittelbar in Gefahr ist. Kurz darauf erfahren sie jedoch, dass der Mord in der vorherigen Nacht unter außergewöhnlichen Umständen begangen wurde. Die Aufklärung dieses Geheimnisses wird Holmes und Watson Jahrzehnte zurückversetzen, als sich auf der anderen Seite des Atlantiks in Pennsylvania in den 1880er Jahren Gewalt, Korruption, eine geheime Organisation und Bergleute gefährlich vermischten... Der Mord scheint unlösbar. Und wäre es auch, wenn der Detektiv in der Geschichte nicht Sherlock Holmes wäre.'
+        },
+        description: 'Um crime aparentemente perfeito, um brilhante detetive e uma trama espetacular.',
+        trailer: 'https://www.youtube.com/watch?v=example',
+        movie: '#',
+        download: 'O-Vale-do-Medo-Arthur-Conan-Doyle.epub',
+        kind: 'book'
     }
 };
 
@@ -1104,11 +1117,18 @@ function updateLanguage(lang) {
     document.querySelector('#showMoreLivros').innerText = translations[lang]['Mostrar Mais'];
     document.querySelector('textarea').placeholder = translations[lang]['Dúvidas ou sugestões'];
     document.querySelector('#suporte button').innerText = translations[lang]['Enviar'];
-    if (document.getElementById('filmDetail').style.display === 'block') {
-        document.getElementById('filmSynopsisLabel').innerText = translations[lang]['Sinopse'];
-        document.getElementById('filmDescriptionLabel').innerText = translations[lang]['Descrição'];
+    if (document.getElementById('filmDetail').style.display === 'flex') {
+        const detail = document.getElementById('filmDetail');
+        const synopsisLabel = document.getElementById('filmSynopsisLabel');
+        const descriptionLabel = document.getElementById('filmDescriptionLabel');
+        if (synopsisLabel) synopsisLabel.innerText = translations[lang]['Sinopse'];
+        if (descriptionLabel) descriptionLabel.innerText = translations[lang]['Descrição'];
         document.getElementById('watchTrailerBtn').innerText = translations[lang]['Ver trailer'];
-        document.getElementById('watchMovieBtn').innerText = translations[lang]['Ver filme'];
+        const movieBtn = document.getElementById('watchMovieBtn');
+        const isBook = detail.dataset.kind === 'book';
+        movieBtn.innerText = isBook
+            ? (translations[lang]['Baixar livro'] || translations['pt-br']['Baixar livro'])
+            : (translations[lang]['Ver filme'] || translations['pt-br']['Ver filme']);
         document.querySelector('#filmDetail button:last-child').innerText = translations[lang]['Fechar'];
     }
 
@@ -1293,10 +1313,10 @@ function openFilm(slug) {
 
     const lang = document.documentElement.lang || 'pt-br';
     const trans = {
-        'pt-br': { fechar: 'Fechar', verTrailer: 'Ver trailer', assistirFilme: 'Assistir filme', sinopse: 'Sinopse' },
-        'en': { fechar: 'Close', verTrailer: 'Watch trailer', assistirFilme: 'Watch movie', sinopse: 'Synopsis' },
-        'ru': { fechar: 'Закрыть', verTrailer: 'Смотреть трейлер', assistirFilme: 'Смотреть фильм', sinopse: 'Синопсис' },
-        'de': { fechar: 'Schließen', verTrailer: 'Trailer ansehen', assistirFilme: 'Film ansehen', sinopse: 'Synopsis' }
+        'pt-br': { fechar: 'Fechar', verTrailer: 'Ver trailer', assistirFilme: 'Assistir filme', baixarLivro: 'Baixar livro', sinopse: 'Sinopse' },
+        'en': { fechar: 'Close', verTrailer: 'Watch trailer', assistirFilme: 'Watch movie', baixarLivro: 'Download book', sinopse: 'Synopsis' },
+        'ru': { fechar: 'Закрыть', verTrailer: 'Смотреть трейлер', assistirFilme: 'Смотреть фильм', baixarLivro: 'Скачать книгу', sinopse: 'Синопсис' },
+        'de': { fechar: 'Schließen', verTrailer: 'Trailer ansehen', assistirFilme: 'Film ansehen', baixarLivro: 'Buch herunterladen', sinopse: 'Synopsis' }
     };
     const t = trans[lang] || trans['pt-br'];
 
@@ -1314,9 +1334,22 @@ function openFilm(slug) {
     trailerBtn.innerText = t.verTrailer;
     const movieBtn = document.getElementById('watchMovieBtn');
     movieBtn.onclick = function() {
-        window.open(film.movie, '_blank');
+        const url = film.download || film.movie || '#';
+        if (url && url !== '#') {
+            if (film.kind === 'book') {
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = url;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                window.open(url, '_blank');
+            }
+        }
     };
-    movieBtn.innerText = t.assistirFilme;
+    movieBtn.innerText = film.kind === 'book' ? (t.baixarLivro || t.assistirFilme) : t.assistirFilme;
+    detail.dataset.kind = film.kind || '';
     detail.style.display = 'flex';
     detail.setAttribute('aria-hidden', 'false');
 }
